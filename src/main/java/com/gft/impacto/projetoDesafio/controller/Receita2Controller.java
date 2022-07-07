@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gft.impacto.projetoDesafio.entidades.ReceitaSemOAuxItens;
 import com.gft.impacto.projetoDesafio.service.Receita2Service;
@@ -70,6 +71,39 @@ public class Receita2Controller {
 		return mv;
 		
 	}
+	
+	@RequestMapping
+	public ModelAndView listarIngrediente() {
+		
+		ModelAndView mv = new ModelAndView("receita/lista.html");
+		
+		mv.addObject("lista", receita2Service.ListarReceitas());
+		
+		return mv;
+		
+	}
+
+	@RequestMapping("/excluir")
+	public ModelAndView excluirReceita (@RequestParam Long id, RedirectAttributes redirectAttributes) {
+	
+		
+		ModelAndView mv = new ModelAndView("redirect:/receita2");
+		
+		try {
+			receita2Service.excluirReceita(id);
+			redirectAttributes.addFlashAttribute("mensagem","Receita excluido com sucesso");
+		} catch (Exception e) {
+			// TODO: handle exception
+			redirectAttributes.addFlashAttribute("mensagem", "Erro ao excluir receita"+e.getMessage());
+		}
+		
+		return mv ;
+	}
+	
+	
+	
+	
+	
 	
 	
 	

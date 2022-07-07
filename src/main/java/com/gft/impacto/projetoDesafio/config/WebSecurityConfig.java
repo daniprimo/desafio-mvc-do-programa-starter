@@ -42,12 +42,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		 	
 	}
 	 
-	 @Override
-	 @Bean
+	@Override
+	@Bean
 	protected UserDetailsService userDetailsService() {
 	
 		UserDetails user = User.withDefaultPasswordEncoder()
-								.username("admin")
+								.username("admin@gft.com")
 								.password("Gft@1234")
 								.roles("PG_INGREDIENTE","PG_LISTAINGREDIENTE","PG_UNIDADE","PG_LISTAUNIDADE","PG_RECEITA","PG_LISTARECEITA")
 								.build();
