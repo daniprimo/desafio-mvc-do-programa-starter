@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{principal.html}">
+<meta charset="UTF-8">
+<body th:style="'background-image:url(' + @{/imagens/inicio/receita.jpeg} + '); background-repeat: no-repeat, repeat; background-size: cover;'">
+ </body>
+
+
+<div layout:fragment="content">
+	<div class="alert alert-primary" th:if="${mensagem != null}"
+		th:text="${mensagem}"></div>
+	<div class="card">
+		<div class="card=header">
+			<p class="text-primary">Nova Receita</p>
+		</div>
+
+		<div class="card-body">
+			<form method="POST" th:object="${receita}"
+				th:action="@{/receita/editar}">
+				<input type="hidden" th:field="*{id}">
+
+				<div class="col-sm-5 form-group mb-3">
+					<label for="nome"> Nome da Receita: </label> <input
+						class="form-control" type="text" th:field="*{nomeDaReceita}"
+						required></input>
+					<div class="text-danger"
+						th:if="${#fields.hasErrors('nomeDaReceita')}"
+						th:errors="*{nomeDaReceita}"></div>
+				</div>
+
+
+				<h3>Ingredientes</h3>
+
+<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Ingrediente</th>
+					<th>Quantidade</th>
+					<th>Medida</th>
+				</tr>				
+			</thead>
+			<tbody>
+				<tr th:each="desenvolvedor : ${lista}">
+					<td th:text="${desenvolvedor.id}"></td>
+					<td th:text="${desenvolvedor.nome}"></td>
+					<td th:text="${desenvolvedor.quatroLetras}"></td>
+					<td th:text="${desenvolvedor.email}"></td>
+					<td th:text="'R$' + ${#numbers.formatDecimal(desenvolvedor.salarioMensal, 0,'POINT',2,'COMMA')}"></td>
+					<td th:text="${desenvolvedor.linguagem.nome}"></td>
+					<td><a class="btn btn-primary btn-sm" th:href="@{/desenvolvedor/editar(id=${desenvolvedor.id})}">Editar</a>
+					<a class="btn btn-primary btn-sm" th:href="@{/desenvolvedor/excluir(id=${desenvolvedor.id})}" onclick="return confirm('Você deseja realmente excluir este desenvolvedor?')">Excluir</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+
+
+
+				<label for="nome"> Ingrediente:</label> <select class="form-select"
+					th:href="@{auxItens.ingredientes}">
+					<option th:each="ingrediente: ${listarIngredientes}"
+						th:value="${ingrediente.id}"
+						th:text="${ingrediente.nomeDoIngrediente}">
+				</select> <label for="nome"> Quantidade: </label> <input class="form-control"
+					type="text" th:href="@{auxItens.quantidade}" required></input>
+				<div class="text-danger"
+					th:if="${#fields.hasErrors('ModoDePreparo')}"
+					th:errors="*{ModoDePreparo}"></div>
+
+
+
+				<label for="nome"> Unidade:</label> <select class="form-select"
+					th:href="@{auxItens.UnidadeDeMedida}">
+					<option th:each="medida: ${listarUnidade}" th:value="${medida.id}"
+						th:text="${medida.unidade}">
+				</select>
+			
+
+
+				<div class="col-sm-5 form-group mb-3">
+					<label for="nome"> Modo de Preparo: </label> <input
+						class="form-control" type="text" th:field="*{ModoDePreparo}"
+						required></input>
+					<div class="text-danger"
+						th:if="${#fields.hasErrors('ModoDePreparo')}"
+						th:errors="*{ModoDePreparo}"></div>
+				</div>
+
+				
+				<button type="submit">Registrar</button>
+			</form>
+
+
+		</div>
+
+	</div>
+
+</div>
+</html>

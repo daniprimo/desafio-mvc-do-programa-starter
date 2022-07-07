@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{principal.html}">
+<meta charset="UTF-8">
+<div layout:fragment="content">
+	<div class="alert alert-primary" th:if="${mensagem != null}"
+		th:text="${mensagem}"></div>
+	<div class="card">
+		<div class="card-header">
+			<p class="text-primary">Novo Ingrediente</p>
+		</div>
+		<div class="card-body">
+	
+					<form method="POST" th:object="${auxiliar}"
+				th:action="@{/auxiliar/editar}">
+
+				<input type="hidden" th:field="*{id}">
+
+				<div class="col-sm-2 form-group mb-3">
+					<label for="ingredientes">Ingrediente</label> <select
+						class="form-select" th:field="*{ingredientes}">
+						<option th:each="ingrediente: ${listarIngredientes}"
+							th:value="${ingrediente.id}"
+							th:text="${ingrediente.nomeDoIngrediente}">
+					</select>
+					<div class="text-danger"
+						th:if="${#fields.hasErrors('ingredientes')}"
+						th:errors="*{ingredientes}"></div>
+				</div>
+
+
+				<div class="col-sm-1 form-group mb-3">
+					<label for="nome"> Quantidade </label> <input class="form-control"
+						type="text" th:field="*{quantidade}" required></input>
+					<div class="text-danger" th:if="${#fields.hasErrors('quantidade')}"
+						th:errors="*{quantidade}"></div>
+				</div>
+
+				<div class="col-sm-2 form-group mb-3">
+					<label for="unidadeDeMedida">Unidade de Medida</label> <select
+						class="form-select" th:field="*{unidadeDeMedida}">
+						<option th:each="medida: ${listarUnidade}" th:value="${medida.id}"
+							th:text="${medida.unidade}">
+					</select>
+					<div class="text-danger"
+						th:if="${#fields.hasErrors('unidadeDeMedida')}"
+						th:errors="*{unidadeDeMedida}"></div>
+				</div>
+
+				<button type="submit" class="btn btn-dark">Cadastrar</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{principal.html}">
+<meta charset="UTF-8">
+<body th:style="'background-image:url(' + @{/imagens/inicio/receita.jpeg} + '); background-repeat: no-repeat, repeat; background-size: cover;'">
+ </body>
+
+
+<div layout:fragment="content">
+
+		<div class="navbar-header">
+									<a class="btn-outline-primary" href="#">Usuario</a>
+								</div>
+
+								<ul class="nav navbar-nav navbar-right">
+									<li class="nav-item">
+										<form name="logoutForm" th:action="@{/logout}" method="post">
+											<label><span sec:authentication="name">
+													   Usuario </span></label> <input class="btn btn-outline-danger" type="submit"
+												value="Sair" />
+										</form>
+									</li>
+								</ul>
+
+
+	<div class="alert alert-primary" th:if="${mensagem != null}"
+		th:text="${mensagem}"></div>
+	<div class="card">
+		<div class="card=header">
+			<p class="text-primary">Nova Receita</p>
+		</div>
+
+		<div class="card-body">
+
+			<form method="POST" th:object="${receita2}"
+				th:action="@{/receita2/editar}">
+
+				<input type="hidden" th:field="*{id}" />
+
+				<div class="col-sm-5 form-group mb-3">
+					<label for="nomeDaReceita">Nome da Receita: </label> <input
+						class="form-control" type="text" th:field="*{nomeDaReceita}"></input>
+					<div class="text-danger"
+						th:if="${#fields.hasErrors('nomeDaReceita')}"
+						th:errors="*{nomeDaReceita}"></div>
+				</div>
+
+				<div class="col-sm-5 form-group mb-3">
+					<label for="ingrediente">Ingrediente: </label> <input
+						class="form-control" type="text" th:field="*{ingrediente}"></input>
+					<div class="text-danger"
+						th:if="${#fields.hasErrors('ingrediente')}"
+						th:errors="*{ingrediente}"></div>
+				</div>
+				
+				<div class="col-sm-5 form-group mb-3">
+					<label for="ModoDePreparo">Modo de Preparo: </label> <input
+						class="form-control" type="text" th:field="*{ModoDePreparo}"></input>
+					<div class="text-danger"
+						th:if="${#fields.hasErrors('ModoDePreparo')}"
+						th:errors="*{ModoDePreparo}"></div>
+				</div>
+
+				<button type="submit" class="btn btn-dark">Cadastrar</button>
+			</form>
+
+		</div>
+
+	</div>
+
+</div>
+</html>

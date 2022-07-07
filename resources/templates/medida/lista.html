@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{principal.html}"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<meta charset="UTF-8">
+
+<body th:style="'background-image:url(' + @{/imagens/inicio/listaunidade.jpeg} + '); background-repeat: no-repeat, repeat; background-size: cover;'">
+ </body>
+
+
+<div layout:fragment="content">
+
+		<div class="navbar-header">
+									<a class="btn-outline-primary" href="#">Usuario</a>
+								</div>
+
+								<ul class="nav navbar-nav navbar-right">
+									<li class="nav-item">
+										<form name="logoutForm" th:action="@{/logout}" method="post">
+											<label><span sec:authentication="name">
+													   Usuario </span></label> <input class="btn btn-outline-danger" type="submit"
+												value="Sair" />
+										</form>
+									</li>
+								</ul>
+
+
+	<div class="alert alert-primary" th:if="${#lists.isEmpty(lista)}">
+		<h1>Nenhuma unidade cadastrado</h1>
+	</div>
+	<div class="alert alert-primary" th:if="${mensagem != null}" th:text="${mensagem}"></div>
+	<div th:if="${not #lists.isEmpty(lista)}">
+	<table class="table table-striped" >
+		<thead>
+			<tr>
+				<th>Codigo</th>
+				<th>Unidade</th>
+				<th>Descricao Unidade</th>
+				<th>Opções</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="medida : ${lista}">
+				<td th:text="${medida.id}"></td>
+				<td th:text="${medida.unidade}"></td>
+				<td th:text="${medida.descricaoUnidade}"></td>
+				<td><a class="btn btn-primary btn-sm" th:href="@{/medida/editar(id=${medida.id})}">Editar</a>
+					<a class="btn btn-primary btn-sm" th:href="@{/medida/excluir(id=${medida.id})}" onclick="return confirm('Você deseja realmente excluir este ingrediente?')">Excluir</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+</div>
+
+</html>

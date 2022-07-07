@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{principal.html}">
+<meta charset="UTF-8">
+<body th:style="'background-image:url(' + @{/imagens/inicio/ingrediente.jpeg} + '); background-repeat: no-repeat, repeat; background-size: cover;'">
+ </body>
+
+<div layout:fragment="content">
+
+		<div class="navbar-header">
+									<a class="btn-outline-primary" href="#">Usuario</a>
+								</div>
+
+								<ul class="nav navbar-nav navbar-right">
+									<li class="nav-item">
+										<form name="logoutForm" th:action="@{/logout}" method="post">
+											<label><span sec:authentication="name">
+													   Usuario </span></label> <input class="btn btn-outline-danger" type="submit"
+												value="Sair" />
+										</form>
+									</li>
+								</ul>
+
+
+	<div class="alert alert-primary" th:if="${mensagem != null}"
+		th:text="${mensagem}"></div>
+	<div class="card">
+		<div class="card-header">
+			<p class="text-primary">Novo Ingrediente</p>
+		</div>
+		<div class="card-body">
+			<form method="POST" th:object="${ingrediente}"
+				th:action="@{/ingrediente/editar}">
+				
+				<input type="hidden" th:field="*{id}">
+				<div class="form-group mb-3">
+					<label for="nome"> Cadastrar Ingrediente</label> <input class="form-control"
+						type="text" th:field="*{nomeDoIngrediente}" required size="250"></input>
+					<div class="text-danger"
+						th:if="${#fields.hasErrors('nomeDoIngrediente')}"
+						th:errors="*{nomeDoIngrediente}"></div>
+				</div>
+				
+				<button type="submit" class="btn btn-dark">Cadastrar</button>	
+			</form>
+		</div>
+	</div>
+</div>
+
+</html>

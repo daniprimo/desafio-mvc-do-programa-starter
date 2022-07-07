@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{principal.html}"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<meta charset="UTF-8">
+
+<body th:style="'background-image:url(' + @{/imagens/inicio/inicio.jpeg} + '); background-repeat: no-repeat, repeat; background-size: cover;'">
+ </body>
+
+<div layout:fragment="content">
+
+	
+		<div class="navbar-header">
+									<a class="btn-outline-primary" href="#">Usuario</a>
+								</div>
+
+								<ul class="nav navbar-nav navbar-right">
+									<li class="nav-item">
+										<form name="logoutForm" th:action="@{/logout}" method="post">
+											<label><span sec:authentication="name">
+													   Usuario </span></label> <input class="btn btn-outline-danger" type="submit"
+												value="Sair" />
+										</form>
+									</li>
+								</ul>
+
+
+		<h1>Receitas Cadastradas</h1>
+
+ 
+
+	<div class="alert alert-primary" th:if="${#lists.isEmpty(lista)}">
+		<h1>Nenhuma unidade cadastrado</h1>
+	</div>
+	<div class="alert alert-primary" th:if="${mensagem != null}"
+		th:text="${mensagem}"></div>
+	<div th:if="${not #lists.isEmpty(lista)}">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Codigo</th>
+					<th>Nome da Receita:</th>
+					<th>Igredientes:</th>
+					<th>Modo de preparo:</th>
+					<th>Ações:</th>
+				</tr>
+			</thead>
+			<tbody>
+
+				<tr th:each="receita2 : ${lista}">
+					<td th:text="${receita2.id}"></td>
+					<td th:text="${receita2.nomeDaReceita}"></td>
+					<td th:text="${receita2.ingrediente}"></td>
+					<td th:text="${receita2.modoDePreparo}"></td>
+					<td><a class="btn btn-primary btn-sm"
+						th:href="@{/receita2/editar(id=${receita2.id})}">Editar</a> <a
+						class="btn btn-primary btn-sm"
+						th:href="@{/receita2/excluir(id=${receita2.id})}"
+						onclick="return confirm('Você deseja realmente excluir essa receita?')">Excluir</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+
+	<h1>Fotos de receita</h1>
+
+
+</div>
+
+</html>
